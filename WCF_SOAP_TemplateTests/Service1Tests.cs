@@ -11,6 +11,9 @@ namespace WCF_SOAP_Template.Tests
     [TestClass()]
     public class Service1Tests
     {
+        /// <summary>
+        /// Denne test, tester om listen er højere end 0.
+        /// </summary>
         [TestMethod()]
         public void VisListenTest()
         {
@@ -21,7 +24,9 @@ namespace WCF_SOAP_Template.Tests
             //Assert
             Assert.AreNotEqual(0, tempList.Count);
         }
-
+        /// <summary>
+        /// Denne test, indlæser listen laver en count og derefter indsætter et objekt og laver endnu et count for at estimere hvorvidt at de ikke er lig hinanden.
+        /// </summary>
         [TestMethod()]
         public void IndsætObjektTest()
         {
@@ -38,7 +43,9 @@ namespace WCF_SOAP_Template.Tests
             //Assert
             Assert.AreNotEqual(firstCount, secondCount);
         }
-
+        /// <summary>
+        /// Denne test sletter det sidste element på listen. 
+        /// </summary>
         [TestMethod()]
         public void SletObjektTest()
         {
