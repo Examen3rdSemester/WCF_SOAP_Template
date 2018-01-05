@@ -36,7 +36,7 @@ namespace WCF_SOAP_Template.Tests
             List<ChangeClassName> theList = service.VisListen();
             int firstCount = theList.Count;
 
-            service.IndsætObjekt(new ChangeClassName(1, "testNavn", "testEfternavn", 200, 10, DateTime.Now));
+            service.IndsætObjekt(new ChangeClassName(1, "testNavn", "testEfternavn", 200, 10));
 
             theList = service.VisListen();
             int secondCount = theList.Count;

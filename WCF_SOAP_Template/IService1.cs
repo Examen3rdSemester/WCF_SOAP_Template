@@ -19,10 +19,13 @@ namespace WCF_SOAP_Template
         void IndsætObjekt(ChangeClassName temp);
 
         [OperationContract]
+        ChangeClassName VisObjekt(int id);
+
+        [OperationContract]
         void SletObjekt(int id);
 
         [OperationContract]
-        void RedigerObjekt(int id, ChangeClassName temp);
+        void RedigerObjekt(ChangeClassName temp);
 
         [OperationContract]
         double UdregnObjekt(int id);

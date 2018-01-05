@@ -17,7 +17,7 @@ namespace WCF_SOAP_Template
         //Denne skal udkommenteres når SQL påbegyndes.
         private static List<ChangeClassName> ChangeList = new List<ChangeClassName>()
         {
-            new ChangeClassName(1, "Navn", "Type", 2.5, 100,new DateTime(2017,12,27,20,50,00))
+            new ChangeClassName(1, "Navn", "Type", 2.5, 100)
         };
         #endregion
 
@@ -62,12 +62,12 @@ namespace WCF_SOAP_Template
         /// <param name="id"></param>
         /// <param name="løn"></param>
         /// <param name="arbejdsdage"></param>
-        public void RedigerObjekt(int id, ChangeClassName temp)
+        public void RedigerObjekt(ChangeClassName temp)
         {
-            if (ChangeList.Count != 0 && ChangeList.Exists(b => b.Id == id) && temp.ChangeDouble >= 0 && temp.ChangeInteger >= 0)
+            if (ChangeList.Count != 0 && ChangeList.Exists(b => b.Id == temp.Id) && temp.ChangeDouble >= 0 && temp.ChangeInteger >= 0)
             {
-                ChangeList.Find(b => b.Id == id).ChangeInteger = temp.ChangeInteger;
-                ChangeList.Find(b => b.Id == id).ChangeDouble = temp.ChangeDouble;
+                ChangeList.Find(b => b.Id == temp.Id).ChangeInteger = temp.ChangeInteger;
+                ChangeList.Find(b => b.Id == temp.Id).ChangeDouble = temp.ChangeDouble;
             }
 
         }
@@ -85,13 +85,18 @@ namespace WCF_SOAP_Template
             }
             return 0;
         }
+
+        public ChangeClassName VisObjekt(int id)
+        {
+            return ChangeList.Find(b => b.Id == id);
+        }
         #endregion
 
-        #region SQL
-        ///// <summary>
-        ///// Denne metode returnere en liste fra databasen, connection string er defineret i DatabaseService..
-        ///// </summary>
-        ///// <returns></returns>
+        //#region SQL
+        /// <summary>
+        /// Denne metode returnere en liste fra databasen, connection string er defineret i DatabaseService..
+        /// </summary>
+        /// <returns></returns>
         //public List<ChangeClassName> VisListen()
         //{
         //    SqlCommand GetAllElements = new SqlCommand("SELECT * FROM Eksamen", DatabaseService.SqlCon());
@@ -100,29 +105,44 @@ namespace WCF_SOAP_Template
 
         //    return Util.ListCreator(reader);
         //}
-        ///// <summary>
-        ///// Denne metode tillader at indsætte data ind i databasen via SQL
-        ///// </summary>
-        ///// <param name="temp"></param>
+        /// <summary>
+        /// Denne metode tillader at indsætte data ind i databasen via SQL
+        /// </summary>
+        /// <param name = "temp" ></ param >
         //public void IndsætObjekt(ChangeClassName temp)
         //{
         //    SqlCommand IndsætObjekt =
         //        new SqlCommand(
-        //            "insert into Eksamen(ChangeString, ChangeString1, ChangeDouble, ChangeInteger, DateAndTime) values (@ChangeString, @ChangeString1, @ChangeDouble, @ChangeInteger, @DateAndTime)",
+        //            "insert into Eksamen(ChangeString, ChangeString1, ChangeDouble, ChangeInteger) values (@ChangeString, @ChangeString1, @ChangeDouble, @ChangeInteger)",
         //            DatabaseService.SqlCon());
 
         //    IndsætObjekt.Parameters.AddWithValue("@ChangeString", temp.ChangeString);
         //    IndsætObjekt.Parameters.AddWithValue("@ChangeString1", temp.ChangeString1);
         //    IndsætObjekt.Parameters.AddWithValue("@ChangeDouble", temp.ChangeDouble);
         //    IndsætObjekt.Parameters.AddWithValue("@ChangeInteger", temp.ChangeInteger);
-        //    IndsætObjekt.Parameters.AddWithValue("@DateAndTime", temp.DateAndTime);
         //    IndsætObjekt.ExecuteNonQuery();
         //    DatabaseService.SqlCon().Close();
         //}
-        ///// <summary>
-        ///// Denne metode tillader at slette en colonne i databasen via SQL
-        ///// </summary>
-        ///// <param name="id"></param>
+
+        //public ChangeClassName VisObjekt(int id)
+        //{
+        //    SqlCommand GetSingleElement = new SqlCommand("SELECT * FROM Eksamen WHERE Id = @Id", DatabaseService.SqlCon());
+        //    GetSingleElement.Parameters.AddWithValue("@Id", id);
+        //    SqlDataReader reader = GetSingleElement.ExecuteReader();
+        //    DatabaseService.SqlCon().Close();
+
+        //    ChangeClassName tempObjekt = new ChangeClassName();
+        //    while (reader.Read())
+        //    {
+        //        tempObjekt = Util.ObjectCreator(reader);
+        //    }
+        //    return tempObjekt;
+        //}
+
+        /// <summary>
+        /// Denne metode tillader at slette en colonne i databasen via SQL
+        /// </summary>
+        /// <param name = "id" ></ param >
         //public void SletObjekt(int id)
         //{
         //    SqlCommand GetAllElements = new SqlCommand("Delete FROM Eksamen WHERE Id = @Id", DatabaseService.SqlCon());
@@ -130,33 +150,33 @@ namespace WCF_SOAP_Template
         //    GetAllElements.ExecuteNonQuery();
         //    DatabaseService.SqlCon().Close();
         //}
-        ///// <summary>
-        ///// Denne tillader at lave ændringer i en kolonne i databasen.
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <param name="temp"></param>
-        //public void RedigerObjekt(int id, ChangeClassName temp)
+        /// <summary>
+        /// Denne tillader at lave ændringer i en kolonne i databasen.
+        /// </summary>
+        /// <param name = "id" ></ param >
+        /// < param name= "temp" ></ param >
+        //public void RedigerObjekt(ChangeClassName temp)
         //{
         //    SqlCommand RedigerObjekt =
         //                new SqlCommand(
-        //                    "Update Eksamen set ChangeString = @ChangeString, ChangeString1 = @ChangeString1, ChangeDouble = @ChangeDouble, ChangeInteger = @ChangeInteger, DateAndTime = @DateAndTime WHERE Id = @Id",
+        //                    "Update Eksamen set ChangeString = @ChangeString, ChangeString1 = @ChangeString1, ChangeDouble = @ChangeDouble, ChangeInteger = @ChangeInteger WHERE Id = @Id",
         //                    DatabaseService.SqlCon());
-        //    RedigerObjekt.Parameters.AddWithValue("@Id", id);
+        //    RedigerObjekt.Parameters.AddWithValue("@Id", temp.Id);
         //    RedigerObjekt.Parameters.AddWithValue("@ChangeString", temp.ChangeString);
         //    RedigerObjekt.Parameters.AddWithValue("@ChangeString1", temp.ChangeString1);
         //    RedigerObjekt.Parameters.AddWithValue("@ChangeDouble", temp.ChangeDouble);
         //    RedigerObjekt.Parameters.AddWithValue("@ChangeInteger", temp.ChangeInteger);
-        //    RedigerObjekt.Parameters.AddWithValue("@DateAndTime", temp.DateAndTime);
+
         //    RedigerObjekt.ExecuteNonQuery();
         //    DatabaseService.SqlCon().Close();
         //}
-        ///// <summary>
-        ///// Denne metode returnere en liste fra databasen, connection string er defineret i DatabaseService.
-        ///// Der laves en SQL kommando af select og så læses data og dernæst sættes det læste data til de respektive properties
-        ///// derefter udregnes matematiken.
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
+        /// <summary>
+        /// Denne metode returnere en liste fra databasen, connection string er defineret i DatabaseService.
+        /// Der laves en SQL kommando af select og så læses data og dernæst sættes det læste data til de respektive properties
+        /// derefter udregnes matematiken.
+        /// </summary>
+        /// <param name = "id" ></ param >
+        /// < returns ></ returns >
         //public double UdregnObjekt(int id)
         //{
         //    SqlCommand GetAllElements = new SqlCommand($"SELECT * FROM Eksamen WHERE Id = @Id", DatabaseService.SqlCon());
@@ -172,6 +192,6 @@ namespace WCF_SOAP_Template
         //    return tempObjekt.ChangeDouble * Double.Parse(tempObjekt.ChangeDouble.ToString());
 
         //}
-        #endregion
+        //#endregion
     }
 }

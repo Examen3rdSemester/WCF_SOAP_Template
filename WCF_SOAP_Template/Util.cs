@@ -18,7 +18,6 @@ namespace WCF_SOAP_Template
             TemporaryObj.ChangeString1 = reader.GetString(2);
             TemporaryObj.ChangeDouble = reader.GetDouble(3);
             TemporaryObj.ChangeInteger = reader.GetInt32(4);
-            TemporaryObj.DateAndTime = reader.GetDateTime(5);
 
 
             return TemporaryObj;
@@ -38,7 +37,6 @@ namespace WCF_SOAP_Template
                     TemporaryObj.ChangeString1 = reader.GetString(2);
                     TemporaryObj.ChangeDouble = reader.GetDouble(3);
                     TemporaryObj.ChangeInteger = reader.GetInt32(4);
-                    TemporaryObj.DateAndTime = reader.GetDateTime(5);
 
                     TemporaryList.Add(TemporaryObj);
                 }
